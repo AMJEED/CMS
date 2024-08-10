@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #E1E6EF;
+    background-color: rgba(99, 152, 248, 0.5);
     
     border-radius: 10px;
     padding: 10px 20px;
@@ -35,3 +35,18 @@
     border: 1px solid gray;
     transition: all 0.3s ease-in;
 }
+.dashboard {
+    display: flex;
+    background-color: #F7F7F7;
+    background-image: url('../../assets/images/air1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh; /* Set the minimum height to viewport height */
+    width: 100%;
+  }
+  .left__sidebar__dashboard {
+    background-color: #1a202c;/* Dark background color */
+    color: #fff; /* Text color */
+    padding: 20px;
+  }

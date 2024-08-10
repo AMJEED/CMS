@@ -62,7 +62,8 @@
 }
 
 .course__Card:hover{
-    background-color: transparent;
+    /* background-color: transparent; */
+    
 }
 
 @media screen and (max-width:768px) {

@@ -5,10 +5,10 @@ import { Col, Container, Row } from 'react-bootstrap';
 import CourseCard from '../DashBoard/CourseCard/CourseCard';
 import CardOfAllCourse from './CardOfCourse/CardOfAllCourse';
 
-
+import styles from "./allcources.module.css";
 const AllCourses = () => {
     return (
-        <div>
+        <div className={styles.main}>
             <Container>
                <Typography className='text-center my-3 border-bottom' variant='h3' color="primary" >
                    All Courses

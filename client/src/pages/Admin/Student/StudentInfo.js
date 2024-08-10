@@ -5,6 +5,15 @@ import MainSidebar from "../AdminDashboard/MainSidebar/MainSidebar";
 import StudentTable from "./StudentTable/StudentTable";
 
 const StudentInfo = () => {
+
+    const headingStyle = {
+      color: '#fff',
+      textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+      textAlign: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Add a semi-transparent black background
+      padding: '20px',
+      borderRadius: '8px',
+    };
   return (
     <div>
       <Container fluid>
@@ -15,9 +24,8 @@ const StudentInfo = () => {
           <Col md={10}>
             <Container className="mb-5">
               <Paper>
-                <Typography
-                  className="text-center text-primary py-5"
-                  variant="h4"
+              <Typography
+                 Typography variant="h4" style={headingStyle}
                 >
                   Student-Info
                 </Typography>

@@ -14,13 +14,20 @@ const AdminCourseInfo = () => {
   const [course, setCourse] = useState(false);
   const dispatch = useDispatch();
   const courseData = useSelector((state) => state.course.courseInfo);
-
+  const headingStyle = {
+    color: '#fff',
+    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+    textAlign: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Add a semi-transparent black background
+    padding: '20px',
+    borderRadius: '8px',
+  };
   useEffect(() => {
     dispatch(fetchCourseInfo());
   }, []);
   return (
     <>
-      <Container fluid>
+      <Container fluid className={Styles.main}>
         <Row>
           <Col md={2} sm={12} className={`d-none d-md-block`}>
             <MainSidebar />
@@ -29,8 +36,7 @@ const AdminCourseInfo = () => {
             <Container>
               <Paper>
                 <Typography
-                  className="text-center text-primary py-5"
-                  variant="h4"
+                 Typography variant="h4" style={headingStyle}
                 >
                   Course-Info
                 </Typography>

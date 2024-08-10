@@ -1,6 +1,13 @@
 const { body, validationResult } = require("express-validator");
 
 module.exports = [
+ 
+
+
+  body("id").not()
+  .isEmpty()
+  .withMessage("Id required"),
+  
   body("userName")
     .not()
     .isEmpty()
@@ -29,7 +36,9 @@ module.exports = [
         throw new Error('Confirm Password does not match ');
       }
       return true
-  })
+  }),
+
+  
 
 ]
 

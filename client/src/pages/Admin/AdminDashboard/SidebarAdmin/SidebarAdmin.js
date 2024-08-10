@@ -7,6 +7,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import GroupIcon from '@material-ui/icons/Group';
 import PersonIcon from '@material-ui/icons/Person';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const SidebarAdmin = () => {
   return (
@@ -23,9 +24,19 @@ const SidebarAdmin = () => {
         Icon={GroupIcon}
       />
       <Sidebar
-        title="Teacher"
-        link="/admin/teacher-info"
+        title="Questions"
+        link="/admin/Question-info"
         Icon={PersonIcon}
+      />
+      <Sidebar
+        title="Pendig Requests"
+        link="/admin/pen-student-info"
+        Icon={NotificationsIcon}
+      />
+       <Sidebar
+        title="Grades"
+        link="/admin/GradesInfo"
+        Icon={NotificationsIcon}
       />
       <Sidebar title="Logout" link="/admin/teacher-info" Icon={ExitToAppIcon} />
     </div>

@@ -36,19 +36,42 @@ const StudentTable = () => {
   const [data, setData] = useState([]);
 
   const userList = async () => {
-    const user = await Axios.get("/users/student",{
-        headers:{
-            "Authorization":"Bearer "+localStorage.getItem("auth_token")
-        }
+    const user = await Axios.get("/users/student", {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("auth_token")
+      }
     })
-    setData(user.data.studentInfo)
+
+    const filteredData =user.data.studentInfo.filter(item => item.status === "1");
+    setData(filteredData)
     //console.log(user.data.teacherInfo)
   };
-
+   
   useEffect(() => {
     userList()
   }, []);
-
+  const HabdleDelete =(id)=>{
+    setData((data) => data.filter((user) => user._id !== id));
+         
+      
+    fetch(`/auth/disapprove/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+       
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+       
+        console.log(data);
+        
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  
+    }
   //   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -74,12 +97,16 @@ const StudentTable = () => {
                 Id
               </TableCell>
               <TableCell align="center" className="text-light">
-                Teacher Name
+                Profile
               </TableCell>
               <TableCell align="center" className="text-light">
-               Email
+                Student Name
               </TableCell>
-              
+              <TableCell align="center" className="text-light">
+                Email
+              </TableCell>
+
+
               <TableCell align="center" className="text-light">
                 Actions
               </TableCell>
@@ -94,18 +121,24 @@ const StudentTable = () => {
                 <TableCell component="th" scope="row" align="center">
                   {row._id}
                 </TableCell>
+                <TableCell component="th" scope="row" align="center">
+                  <img src={row.profilePicture} alt="Profile" style={{ width: '50px', height: '50px' }} />
+                </TableCell>
 
                 <TableCell align="center">{row.userName}</TableCell>
                 <TableCell align="center">
-                {row.email}
+                  {row.email}
                 </TableCell>
+
+
+
                 <TableCell className="" align="center">
                   <IconButton>
-                    <EditIcon color="primary" />
+
                   </IconButton>
-                  <IconButton>
+                  <IconButton onClick={()=>{HabdleDelete(row._id)}}>
                     <DeleteIcon style={{ color: "red" }} />
-                  </IconButton>
+                  </IconButton >
                 </TableCell>
               </TableRow>
             ))}

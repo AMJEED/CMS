@@ -29,4 +29,5 @@ router.get(
   deleteTeacher__controller
 );
 
+
 module.exports = router;

@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { Link, NavLink, useHistory, withRouter } from "react-router-dom";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
-import ChatIcon from "@material-ui/icons/Chat";
-import SettingsIcon from "@material-ui/icons/Settings";
-import { Avatar, Button, IconButton } from "@material-ui/core";
+import home from "@material-ui/icons/Home";
+import SettingsIcon from "@material-ui/icons/HomeRounded";
+import { Avatar, Button, IconButton, StylesProvider } from "@material-ui/core";
 import "./Header.css";
 import ClearIcon from "@material-ui/icons/Clear";
 import DragHandleIcon from "@material-ui/icons/DragHandle";
 import NotesIcon from "@material-ui/icons/Notes";
 import { useDispatch } from "react-redux";
+import reactLogo from "../../assets/images/umt_logo.png"
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const history = useHistory();
@@ -28,7 +30,8 @@ const Header = () => {
             src="https://lms.bup.edu.bd/pluginfile.php/1/theme_edumy/headerlogo2/1618037325/bup-icon.png"
             alt=""
           />
-          <h4>LMS</h4>
+          <img alt="timer" src={reactLogo} />
+          <h4>{user?"Welcome " +user.userName:"UMT"}</h4>
         </Link>
       </div>
       <div
@@ -38,7 +41,7 @@ const Header = () => {
       >
         {user && (
           <ul>
-            {
+            {/* {
               user.role==="Teacher" && <> <li>
               <NavLink onClick={toggleClose} to="/teacher-dashboard">Dashboard</NavLink>
             </li>
@@ -47,8 +50,8 @@ const Header = () => {
 
             </>
             
-            }
-            {
+            } */}
+            {/* {
               user.role==="Admin" && <> <li >
               <NavLink onClick={toggleClose} to="/admin-dashboard">Dashboard</NavLink>
             </li>
@@ -63,26 +66,20 @@ const Header = () => {
             </li>
             
             </>
-            }
-            {
+            } */}
+            {/* {
               user.role==="Student" &&<><li>
               <NavLink onClick={toggleClose} to="/">Dashboard</NavLink>
             </li>
-            <li>
-              <NavLink onClick={toggleClose} to="/ucam">UCAM</NavLink>
-            </li>
-
-            <li>
-              <NavLink onClick={toggleClose} to="/library">LIBRARY</NavLink>
-            </li> </> 
-            }
+            </> 
+            } */}
             
-            <li>
+            {/* <li>
               <Link onClick={toggleClose} to="/profile">Profile</Link>
             </li>
             <li>
-              <NavLink onClick={toggleClose} to="/all-courses">All Courses</NavLink>
-            </li>
+              <NavLink onClick={toggleClose} to="/all-courses">Course</NavLink>
+            </li> */}
 
             {
               user.role==="Teacher" ?   <li className="">
@@ -119,20 +116,42 @@ const Header = () => {
       </div>
       {user ? (
         <div className="right__header">
-          <IconButton>
+          {/* <IconButton>
             <VisibilityOffIcon />
           </IconButton>
-          <IconButton>
-            <NotificationsActiveIcon />
-          </IconButton>
+          // <IconButton>
+          //   <NotificationsActiveIcon />
+          // </IconButton>
           <IconButton>
             <ChatIcon />
           </IconButton>
           <IconButton>
             <SettingsIcon />
-          </IconButton>
+          </IconButton> */}
+{user.role === 'Admin' ? (
+  <IconButton style={{ color: 'white' }}>
+    <Link to="/admin-dashboard">
+      <SettingsIcon style={{ color: 'white' }} />
+    </Link>
+  </IconButton>
+) : <IconButton style={{ color: 'white' }}>
+<Link to="/">
+  <SettingsIcon style={{ color: 'white' }} />
+</Link>
+</IconButton>}
+         
+            
+         
+      
           <Link to="/profile">
-            <Avatar>R</Avatar>
+            <Avatar>
+
+<img
+className="image_logo"
+src={user.profilePicture}
+></img>
+
+            </Avatar>
           </Link>
         </div>
       ) : (

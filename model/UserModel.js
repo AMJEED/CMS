@@ -6,6 +6,10 @@ const userSchema= mongoose.Schema({
         type: String,
         required: true
     },
+    id: {
+        type: String,
+        required: true
+    },
     email: {
         type: String,
         required: true
@@ -14,9 +18,17 @@ const userSchema= mongoose.Schema({
         type: String,
         required: true
     },
+    profilePicture:{
+        type:String,
+        required:true
+    },
     role:{
         type: String,
         default: "Student"
+    },
+    status:{
+        type: String,
+        default: "0"
     }
 },{timestamps: true})
 

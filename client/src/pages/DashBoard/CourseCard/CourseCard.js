@@ -21,7 +21,7 @@ const CourseCard = ({title,name,id,img}) => {
                 <span>Jan-Jun 2021</span>
                 <h5>{name}</h5>
                 <h5>{title}</h5>
-                <Button color='primary' variant="contained" >Published</Button><br/>
+
                 <span>This is a course template which is to be used as the course kit for the teachers.</span>
             </div>
             

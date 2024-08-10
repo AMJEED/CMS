@@ -6,33 +6,60 @@ import Spinner_comp from "../../components/Spinner/Spinner_comp";
 import Toast_Comp from "../../components/Toast/Toast_Comp";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Styles from "./register.module.css"
+
+import clip1 from "../../assets/videos/avaition.mp4"
+import clip2 from "../../assets/videos/pexels-axelmark-4791433-1920x1080-30fps.mp4"
+import clip3 from "../../assets/videos/pexels-hampie-15558109-1920x1080-30fps.mp4"
+import clip4 from "../../assets/videos/pexels-pixabay-854271-1280x720-30fps.mp4"
 
 const Register = () => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [id, setId] = useState("");
   const [error, setError] = useState();
+  const [profilePicture, setProfilePicture] = useState(null);
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(false);
   const history = useHistory();
+  const [courseThumbnail, setCourseThumbnail] = useState("");
+  const [imgLabel, setImgLabel] = useState("Choose photo");
 
   const {user} = useSelector((state) => state.auth);
+  const handleProfilePictureChange = (event) => {
+    const file = event.target.files[0];
+    setProfilePicture(file);
+  };
+  
+ useEffect(() => {
+    setImgLabel(courseThumbnail.name);
+  }, [courseThumbnail]);
+
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
     setLoading(true);
+
+    const formData = new FormData();
+    formData.append('userName', userName);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('confirmPassword', confirmPassword);
+    formData.append('profilePicture', courseThumbnail);
+    formData.append('id', id);
+
     fetch("/auth/register", {
       method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userName,
-        email,
-        password,
-        confirmPassword,
-      }),
+     
+      body:formData
+      // body: JSON.stringify({
+      //   userName,
+      //   email,
+      //   password,
+      //   confirmPassword,
+      // }),
     })
       .then((res) => res.json())
       .then((result) => {
@@ -71,6 +98,14 @@ const Register = () => {
   }, [user])
 
   return (
+    <div>
+    <div className={Styles.videobackground }>
+<video autoPlay loop muted>
+        <source src={clip2} type="video/mp4" />
+        {/* Add additional source elements for different video formats */}
+      </video>
+</div>
+ < div ClassName ={Styles.logincontainer} >
     <div style={{ fontFamily: "Poppins" }}>
       <Container>
         <Toast_Comp
@@ -94,16 +129,29 @@ const Register = () => {
 
               <Form onSubmit={formSubmitHandler}>
                 <Form.Group controlId="formBasicEmail">
-                  <Form.Label>Username</Form.Label>
+                  <Form.Label>Full name</Form.Label>
                   <Form.Control
                     onChange={(e) => setUserName(e.target.value)}
                     type="text"
-                    placeholder="Enter Your Username"
+                    placeholder="Enter Your Fullname"
                   />
                   <span style={{ color: "red" }}>
                     {error && error.userName}
                   </span>
                 </Form.Group>
+
+                <Form.Group controlId="formBasicId">
+                  <Form.Label>Student Id</Form.Label>
+                  <Form.Control
+                    onChange={(e) => setId(e.target.value)}
+                    type="text"
+                    placeholder="Enter Student Id"
+                  />
+                  <span style={{ color: "red" }}>
+                    {error && error.id}
+                  </span>
+                </Form.Group>
+
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>Email address</Form.Label>
                   <Form.Control
@@ -134,7 +182,27 @@ const Register = () => {
                   <span style={{ color: "red" }}>
                     {error && error.confirmPassword}
                   </span>
+
+            <Form.Group className="input__file">
+
+              <label>Profile picture</label>
+              <br />
+              <Form.File
+                
+                type="file"
+                filename="profilePicture"
+                onChange={(e) => setCourseThumbnail(e.target.files[0])}
+                id="custom-file"
+                custom
+                label={imgLabel ? `${imgLabel}` : "Choose photo"}
+              />
+               <span style={{ color: "red" }}>
+                    {error && error.profilePicture}
+                  </span>
+            </Form.Group>
                 </Form.Group>
+
+               
                 <Typography style={{ color: "GrayText" }} variant="subtitle2">
                   Already Have an account?
                   <Link to="/login">Login Here</Link>
@@ -152,7 +220,8 @@ const Register = () => {
           </Col>
         </Row>
       </Container>
-    </div>
+    </div></div>
+      </div>
   );
 };
 

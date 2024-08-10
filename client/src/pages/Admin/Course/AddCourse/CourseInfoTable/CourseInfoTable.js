@@ -94,9 +94,7 @@ const CourseInfoTable = ({ course }) => {
               <TableCell align="center" className="text-light">
                 Created By
               </TableCell>
-              <TableCell align="center" className="text-light">
-                Actions
-              </TableCell>
+              
             </TableRow>
           </TableHead>
           <TableBody>
@@ -109,7 +107,7 @@ const CourseInfoTable = ({ course }) => {
                   {row._id}
                 </TableCell>
 
-                <TableCell align="center">{row.courseName}</TableCell>
+                <TableCell align="center">Airport Fundamentals</TableCell>
                 <TableCell align="center">
                   <img
                     style={{
@@ -123,14 +121,7 @@ const CourseInfoTable = ({ course }) => {
                 </TableCell>
 
                 <TableCell align="center">{row.createdAt.role}</TableCell>
-                <TableCell className="" align="center">
-                  <IconButton>
-                    <EditIcon color="primary" />
-                  </IconButton>
-                  <IconButton onClick={() => deleteCourseHandler(row._id)}>
-                    <DeleteIcon style={{ color: "red" }} />
-                  </IconButton>
-                </TableCell>
+                
               </TableRow>
             ))}
 

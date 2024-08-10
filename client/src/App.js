@@ -24,11 +24,14 @@ import TeacherRoute from "./components/PrivateRoute/TeacherRoute";
 import AdminRoute from "./components/PrivateRoute/AdminRoute";
 import AdminCourseInfo from "./pages/Admin/Course/AdminCourseInfo";
 import StudentInfo from "./pages/Admin/Student/StudentInfo";
-import TeacherInfo from "./pages/Admin/Teacher/TeacherInfo";
+import PendingStudentInfo from "./pages/Admin/PendingStudent/PendingStudentInfo";
+import AdminGraderInfo from "./pages/Admin/Grades/AdminGrades";
+import QuestionInfo from "./pages/Admin/Questions/QuestionInfo";
 import AllCourses from "./pages/All-Courses/AllCourses";
 import NotFound from "./pages/404NotFoud/NotFound";
 import Libray from "./pages/Library/Libray";
 import Ucam from "./pages/Ucam/Ucam";
+import TestInfo  from "./pages/TestInfo/Testinfo"
 
 const Routing = () => {
   const history = useHistory();
@@ -62,12 +65,28 @@ const Routing = () => {
       <AdminRoute exact path="/admin/course-info">
         <AdminCourseInfo />
       </AdminRoute>
+
+       <AdminRoute exact path="/admin/course-info">
+        <AdminCourseInfo />
+      </AdminRoute>
       <AdminRoute exact path="/admin/student-info">
         <StudentInfo />
       </AdminRoute>
-      <AdminRoute exact path="/admin/teacher-info">
-        <TeacherInfo />
+      <AdminRoute exact path="/admin/pen-student-info">
+        <PendingStudentInfo />
       </AdminRoute>
+
+
+      <AdminRoute exact path="/admin/GradesInfo">
+        <AdminGraderInfo/>
+      </AdminRoute>
+      <AdminRoute exact path="/admin/Question-info">
+        <QuestionInfo />
+      </AdminRoute>
+      <StudentRoute exact path="/TestInfo">
+        <TestInfo />
+      </StudentRoute>
+
       <StudentRoute exact path="/messages">
         <Messages />
       </StudentRoute>

@@ -26,7 +26,7 @@ const Sidebar = ({ title, link, Icon ,admin }) => {
           </Button>
         </div>
       ) : (
-        <Link  to={`${link}`}>
+        <Link  to={`${link}`} className='linkIcon'>
           <Icon />
           {title}
         </Link>

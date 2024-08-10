@@ -18,7 +18,7 @@ router.post(
   postCourse__controller
 );
 
-router.get("/get-courses", requireLogin, getCourses__controller);
+router.get("/get-courses",  getCourses__controller);
 
 router.get("/get-course/:courseId", requireLogin, getOneCourse__controller)
 

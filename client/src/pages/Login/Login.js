@@ -7,13 +7,19 @@ import Spinner_comp from "../../components/Spinner/Spinner_comp";
 import Toast_Comp from "../../components/Toast/Toast_Comp";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import clip1 from "../../assets/videos/avaition.mp4"
+import clip2 from "../../assets/videos/pexels-axelmark-4791433-1920x1080-30fps.mp4"
+import clip3 from "../../assets/videos/pexels-hampie-15558109-1920x1080-30fps.mp4"
+import clip4 from "../../assets/videos/pexels-pixabay-854271-1280x720-30fps.mp4"
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState();
+  const [statusError, statusSetError] = useState("");
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(false);
+
   const history = useHistory();
   const {user} = useSelector((state) => state.auth);
   //console.log(user);
@@ -40,15 +46,27 @@ const Login = () => {
         if (result.errors) {
           setError(result.errors);
         } else {
+          console.log(result.userInfo )
+          if(result.userInfo.status != "1"  && result.userInfo.role != "Admin" )
+          {
+            console.log(result.userInfo.status  + result.userInfo.role)
+            statusSetError("Account not verified, Please contact with you instructor")
+          }
+          else
+          {
+            console.log(result.userInfo.status  + result.userInfo.role)
+            setToast(true);
+            setError(null);
+               setTimeout(() => {
+                dispatch({ type: "SET__USER", payload: result.userInfo });
+                localStorage.setItem("auth_token", result.token);
+                localStorage.setItem("user", JSON.stringify(result.userInfo));
+               }, 3000);
+               clearTimeout();
+
+          }
           
-          setToast(true);
-          setError(null);
-             setTimeout(() => {
-              dispatch({ type: "SET__USER", payload: result.userInfo });
-              localStorage.setItem("auth_token", result.token);
-              localStorage.setItem("user", JSON.stringify(result.userInfo));
-             }, 3000);
-             clearTimeout();
+         
         }
       })
       .catch((err) => {
@@ -71,6 +89,14 @@ const Login = () => {
     }
   }, [user])
   return (
+    <>
+    <div className={Styles.videobackground }>
+<video autoPlay loop muted>
+        <source src={clip2} type="video/mp4" />
+        {/* Add additional source elements for different video formats */}
+      </video>
+</div>
+ < div ClassName ={Styles.logincontainer} >
     <div style={{ fontFamily: "Poppins" }}>
       <Container>
         <Toast_Comp
@@ -78,6 +104,18 @@ const Login = () => {
           renderToast={toast}
           msg="Login Success"
         />
+
+{statusError.length > 0 ?
+  <Alert_Comp variant="danger" msg={statusError} /> :
+  null
+}
+
+        
+         {/* <Toast_Comp
+          setToast={setToast2}
+          renderToast={toast2}
+          msg="You account is not varified"
+        /> */}
         <Row>
           <Col md={6} className="mx-auto mt-4 ">
             <Paper className="p-4 shadow rounded">
@@ -134,6 +172,8 @@ const Login = () => {
         </Row>
       </Container>
     </div>
+
+    </div></>
   );
 };
 

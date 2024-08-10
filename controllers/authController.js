@@ -3,10 +3,14 @@ const bcrypt = require("bcryptjs");
 const controllerError = require("../utils/controllerError");
 const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = require("../config/keys");
+const cloudinary=require('../middlewares/cloudinary')
 
 module.exports.register__controller = async (req, res, next) => {
   try {
-    const { userName, email, password, confirmPassword } = req.body;
+    const { userName, email, password, confirmPassword ,id} = req.body;
+    const pic=await cloudinary.uploader.upload(req.file.path)
+   
+   
 
     const userInfo = await UserModel.findOne({ email });
 
@@ -18,8 +22,10 @@ module.exports.register__controller = async (req, res, next) => {
     const hash = await bcrypt.hash(password, 10);
     const user = new UserModel({
       userName,
+      id,
       email,
       password: hash,
+      profilePicture:pic.secure_url
     });
 
     user
@@ -72,6 +78,88 @@ module.exports.login__controller = async (req, res, next) => {
       .catch((err) => {
         controllerError(err, res, "Error occurred");
       });
+  } catch (error) {
+    controllerError(error, res, "Error occurred");
+  }
+};
+
+
+module.exports.getUsersController = async (req, res, next) => {
+  try {
+    const users = await UserModel.find();
+
+    return res.status(200).json({
+      users,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
+
+
+module.exports.updateStatus__controller = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await UserModel.findByIdAndUpdate(
+      userId,
+      { status: "1" }, // Update the status to 1
+      { new: true } // Return the updated document
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        errors: { user: "User not found" },
+      });
+    }
+
+    res.status(200).json({ message: "User status updated successfully" });
+  } catch (error) {
+    controllerError(error, res, "Error occurred");
+  }
+};
+
+
+module.exports.disapprove__controller = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await UserModel.findByIdAndUpdate(
+      userId,
+      { status: "2" }, // Update the status to 1
+      { new: true } // Return the updated document
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        errors: { user: "User not found" },
+      });
+    }
+
+    res.status(200).json({ message: "User status updated successfully" });
+  } catch (error) {
+    controllerError(error, res, "Error occurred");
+  }
+};
+
+
+
+
+const QuestionModel = require('../model/QuestionModel'); // Import your Question model
+
+module.exports.getQuestionUserStats = async (req, res, next) => {
+  try {
+    const totalQuestions = await QuestionModel.countDocuments();
+    const usersWithStatus1 = await UserModel.countDocuments({ status: "1" });
+    const usersWithStatus0 = await UserModel.countDocuments({ status: "0" });
+
+    res.status(200).json({
+      totalQuestions,
+      usersWithStatus1,
+      usersWithStatus0
+    });
   } catch (error) {
     controllerError(error, res, "Error occurred");
   }

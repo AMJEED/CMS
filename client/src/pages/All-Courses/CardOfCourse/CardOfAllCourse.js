@@ -11,13 +11,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCourseInfo } from "../../../Redux/course/courseAction";
 import { Col, Container, Row } from "react-bootstrap";
 import Spinner_comp from "../../../components/Spinner/Spinner_comp";
-
+import { Link,useHistory } from 'react-router-dom';
+import CircularProgress from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles({
   media: {
     height: 140,
   },
 });
+
 const CardOfAllCourse = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory();
   const classes = useStyles();
   const [enroll,setEnroll]=useState(false)
 
@@ -26,10 +30,18 @@ const CardOfAllCourse = () => {
   useEffect(() => {
     dispatch(fetchCourseInfo());
   }, []);
-  const enrollHandler=(id)=>{
-   
+  const openHandler = (id) => {
+    setIsLoading(true);
 
-  }
+    // Simulating a delay of 2 seconds
+    setTimeout(() => {
+      setIsLoading(false);
+      const coursePath = `/course/${id}`;
+      history.push(coursePath);
+    }, 5000);
+    
+
+  };
 
   return (
     <Container>
@@ -47,19 +59,22 @@ const CardOfAllCourse = () => {
                     />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="h2">
-                        {val.courseName}
+                      Airport Fundamentals 
                       </Typography>
                       <Typography
                         variant="body2"
                         color="textSecondary"
                         component="p"
                       >
-                        {val.courseDescription}
+                       Airport Fundamentals course imparts knowledge on the airport, business, airlines, and every aspect of the aviation industry
                       </Typography>
                     </CardContent>
                   </CardActionArea>
                   <CardActionArea className='p-2'>
-                  <Button onClick={()=>enrollHandler(val._id)} variant='contained' color="primary" >Enroll</Button>
+                  <Button  onClick={()=>{openHandler(val._id)}} variant='contained' color="primary" >
+            
+                  {isLoading ?  <CircularProgress size={25} color="secondary" />: 'Open'}</Button>
+                  
                     
                    
 

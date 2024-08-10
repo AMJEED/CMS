@@ -10,5 +10,14 @@
 .avatar__profile__pic{
     height: 130px !important;
     width: 130px !important;
+    border-radius: 50%;
     
 }
+.main {
+    
+    background-color: #F7F7F7;
+    background-image: url('../../assets/images/air2.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+  }
